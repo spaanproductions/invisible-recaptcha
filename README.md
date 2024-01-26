@@ -10,7 +10,7 @@ In reCAPTCHA v2, users need to click the button: "I'm not a robot" to prove they
 
 ## Notice
 
-* The master branch doesn't support multi captchas feature, please use `multi-forms` branch if you need it. (**Most of the time you are misusing recaptcha when you try to put multiple captchas in one page.**)
+* The master branch doesn't support multi captchas feature. (**Most of the time you are misusing recaptcha when you try to put multiple captchas in one page.**)
 
 ## Installation
 
