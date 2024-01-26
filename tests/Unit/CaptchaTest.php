@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests;
+namespace SpaanProductions\InvisibleReCaptcha\Tests\Unit;
 
-use SpaanProductions\InvisibleReCaptcha\InvisibleReCaptchaServiceProvider;
 use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Compilers\BladeCompiler;
-use PHPUnit\Framework\TestCase;
+use SpaanProductions\InvisibleReCaptcha\Tests\TestCase;
 use SpaanProductions\InvisibleReCaptcha\InvisibleReCaptcha;
+use SpaanProductions\InvisibleReCaptcha\InvisibleReCaptchaServiceProvider;
 
 class CaptchaTest extends TestCase
 {

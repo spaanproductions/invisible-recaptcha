@@ -37,6 +37,11 @@
             "SpaanProductions\\InvisibleReCaptcha\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SpaanProductions\\InvisibleReCaptcha\\Tests\\": "tests"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
