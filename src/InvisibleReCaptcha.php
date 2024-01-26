@@ -1,6 +1,6 @@
 <?php
 
-namespace AlbertCht\InvisibleReCaptcha;
+namespace SpaanProductions\InvisibleReCaptcha;
 
 use Illuminate\Support\Arr;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,31 +17,16 @@ class InvisibleReCaptcha
         '_captchaSubmit'
     ];
 
-    /**
-     * The reCaptcha site key.
-     *
-     * @var string
-     */
-    protected $siteKey;
+    /** The reCaptcha site key. */
+    protected string $siteKey;
 
-    /**
-     * The reCaptcha secret key.
-     *
-     * @var string
-     */
-    protected $secretKey;
+    /** The reCaptcha secret key. */
+    protected string $secretKey;
 
-    /**
-     * The other config options.
-     *
-     * @var array
-     */
-    protected $options;
+    /** The other config options. */
+    protected array $options;
 
-    /**
-     * @var \GuzzleHttp\Client
-     */
-    protected $client;
+    protected Client $client;
 
     /**
      * InvisibleReCaptcha.
@@ -50,7 +35,7 @@ class InvisibleReCaptcha
      * @param string $siteKey
      * @param array $options
      */
-    public function __construct($siteKey, $secretKey, $options = [])
+    public function __construct(string $siteKey, string $secretKey, array $options = [])
     {
         $this->siteKey = $siteKey;
         $this->secretKey = $secretKey;
@@ -64,32 +49,24 @@ class InvisibleReCaptcha
 
     /**
      * Get reCaptcha js by optional language param.
-     *
-     * @param string $lang
-     *
-     * @return string
      */
-    public function getCaptchaJs($lang = null)
+    public function getCaptchaJs(?string $lang = null): string
     {
         return $lang ? static::API_URI . '?hl=' . $lang : static::API_URI;
     }
 
     /**
      * Get polyfill js
-     *
-     * @return string
      */
-    public function getPolyfillJs()
+    public function getPolyfillJs(): string
     {
         return static::POLYFILL_URI;
     }
 
     /**
      * Render HTML reCaptcha by optional language param.
-     *
-     * @return string
      */
-    public function render($lang = null, $nonce = null)
+    public function render(?string $lang = null, ?string $nonce = null): string
     {
         $html = $this->renderPolyfill();
         $html .= $this->renderCaptchaHTML();
@@ -99,30 +76,24 @@ class InvisibleReCaptcha
 
     /**
      * Render HTML reCaptcha from directive.
-     *
-     * @return string
      */
-    public function renderCaptcha(...$arguments)
+    public function renderCaptcha(...$arguments): string
     {
         return $this->render(...$arguments);
     }
 
     /**
      * Render the polyfill JS components only.
-     *
-     * @return string
      */
-    public function renderPolyfill()
+    public function renderPolyfill(): string
     {
         return '<script src="' . $this->getPolyfillJs() . '"></script>' . PHP_EOL;
     }
 
     /**
      * Render the captcha HTML.
-     *
-     * @return string
      */
-    public function renderCaptchaHTML()
+    public function renderCaptchaHTML(): string
     {
         $html = '<div id="_g-recaptcha"></div>' . PHP_EOL;
         if ($this->getOption('hideBadge', false)) {
@@ -131,15 +102,14 @@ class InvisibleReCaptcha
 
         $html .= '<div class="g-recaptcha" data-sitekey="' . $this->siteKey .'" ';
         $html .= 'data-size="invisible" data-callback="_submitForm" data-badge="' . $this->getOption('dataBadge', 'bottomright') . '"></div>';
+
         return $html;
     }
 
     /**
      * Render the footer JS necessary for the recaptcha integration.
-     *
-     * @return string
      */
-    public function renderFooterJS(...$arguments)
+    public function renderFooterJS(...$arguments): string
     {
         $lang = Arr::get($arguments, 0);
         $nonce = Arr::get($arguments, 1);
@@ -172,10 +142,8 @@ class InvisibleReCaptcha
 
     /**
      * Get debug javascript code.
-     *
-     * @return string
      */
-    public function renderDebug()
+    public function renderDebug(): string
     {
         $html = '';
         foreach (static::DEBUG_ELEMENTS as $element) {
@@ -188,23 +156,16 @@ class InvisibleReCaptcha
 
     /**
      * Get console.log function for javascript code.
-     *
-     * @return string
      */
-    public function consoleLog($string)
+    public function consoleLog($string): string
     {
         return "console.log({$string});";
     }
 
     /**
      * Verify invisible reCaptcha response.
-     *
-     * @param string $response
-     * @param string $clientIp
-     *
-     * @return bool
      */
-    public function verifyResponse($response, $clientIp)
+    public function verifyResponse(string $response, string $clientIp): bool
     {
         if (empty($response)) {
             return false;
@@ -221,12 +182,8 @@ class InvisibleReCaptcha
 
     /**
      * Verify invisible reCaptcha response by Symfony Request.
-     *
-     * @param Request $request
-     *
-     * @return bool
      */
-    public function verifyRequest(Request $request)
+    public function verifyRequest(Request $request): bool
     {
         return $this->verifyResponse(
             $request->get('g-recaptcha-response'),
@@ -236,12 +193,8 @@ class InvisibleReCaptcha
 
     /**
      * Send verify request.
-     *
-     * @param array $query
-     *
-     * @return array
      */
-    protected function sendVerifyRequest(array $query = [])
+    protected function sendVerifyRequest(array $query = []): array
     {
         $response = $this->client->post(static::VERIFY_URI, [
             'form_params' => $query,
@@ -252,84 +205,64 @@ class InvisibleReCaptcha
 
     /**
      * Getter function of site key
-     *
-     * @return string
      */
-    public function getSiteKey()
+    public function getSiteKey(): string
     {
         return $this->siteKey;
     }
 
     /**
      * Getter function of secret key
-     *
-     * @return string
      */
-    public function getSecretKey()
+    public function getSecretKey(): string
     {
         return $this->secretKey;
     }
 
     /**
      * Set options
-     *
-     * @param array $options
      */
-    public function setOptions($options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }
 
     /**
      * Set option
-     *
-     * @param string $key
-     * @param string $value
      */
-    public function setOption($key, $value)
+    public function setOption(string $key, mixed $value): void
     {
         $this->options[$key] = $value;
     }
 
     /**
      * Getter function of options
-     *
-     * @return string
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
 
     /**
-     * Get default option value for options. (for support under PHP 7.0)
-     *
-     * @param string $key
-     * @param string $value
-     *
-     * @return string
+     * Get default option value for options.
      */
-    public function getOption($key, $value = null)
+    public function getOption(string $key, ?string $value = null): mixed
     {
         return array_key_exists($key, $this->options) ? $this->options[$key] : $value;
     }
 
     /**
      * Set guzzle client
-     *
-     * @param \GuzzleHttp\Client $client
      */
-    public function setClient(Client $client)
+    public function setClient(Client $client): void
     {
         $this->client = $client;
     }
 
     /**
      * Getter function of guzzle client
-     *
-     * @return string
      */
-    public function getClient()
+    public function getClient(): Client
     {
         return $this->client;
     }

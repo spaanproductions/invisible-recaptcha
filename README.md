@@ -1,11 +1,7 @@
 Invisible reCAPTCHA
 ==========
-![php-badge](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg)
-[![packagist-badge](https://img.shields.io/packagist/v/albertcht/invisible-recaptcha.svg)](https://packagist.org/packages/albertcht/invisible-recaptcha)
-[![Total Downloads](https://poser.pugx.org/albertcht/invisible-recaptcha/downloads)](https://packagist.org/packages/albertcht/invisible-recaptcha)
-[![travis-badge](https://api.travis-ci.org/albertcht/invisible-recaptcha.svg?branch=master)](https://travis-ci.org/albertcht/invisible-recaptcha)
-
-![invisible_recaptcha_demo](http://i.imgur.com/1dZ9XKn.png)
+![php-badge](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)
+[![packagist-badge](https://img.shields.io/packagist/v/spaanproductions/invisible-recaptcha.svg)](https://packagist.org/packages/spaanproductions/invisible-recaptcha)
 
 ## Why Invisible reCAPTCHA?
 
@@ -19,17 +15,17 @@ In reCAPTCHA v2, users need to click the button: "I'm not a robot" to prove they
 ## Installation
 
 ```
-composer require albertcht/invisible-recaptcha
+composer require spaanproductions/invisible-recaptcha
 ```
 
-## Laravel 5
+## Laravel 10
 
 ### Setup
 
 Add ServiceProvider to the providers array in `app/config/app.php`.
 
 ```
-AlbertCht\InvisibleReCaptcha\InvisibleReCaptchaServiceProvider::class,
+SpaanProductions\InvisibleReCaptcha\InvisibleReCaptchaServiceProvider::class,
 ```
 
 > It also supports package discovery for Laravel 5.5.
@@ -128,81 +124,6 @@ $validate = Validator::make(Input::all(), [
 
 ```
 
-## CodeIgniter 3.x
-
-set in application/config/config.php :
-```php
-$config['composer_autoload'] = TRUE;
-```
-
-add lines in application/config/config.php :
-```php
-$config['recaptcha.sitekey'] = 'sitekey'; 
-$config['recaptcha.secret'] = 'secretkey';
-// optional
-$config['recaptcha.options'] = [
-    'hideBadge' => false,
-    'dataBadge' => 'bottomright',
-    'timeout' => 5,
-    'debug' => false
-];
-```
-
-In controller, use:
-```php
-$data['captcha'] = new \AlbertCht\InvisibleReCaptcha\InvisibleReCaptcha(
-    $this->config->item('recaptcha.sitekey'),
-    $this->config->item('recaptcha.secret'),
-    $this->config->item('recaptcha.options'),
-);
-```
-
-In view, in your form:
-```php
-<?php echo $captcha->render(); ?>
-```
-
-Then back in your controller you can verify it:
-```php
-$captcha->verifyResponse($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
-```
-
-## Without Laravel or CodeIgniter
-
-Checkout example below:
-
-```php
-<?php
-
-require_once "vendor/autoload.php";
-
-$siteKey = 'sitekey';
-$secretKey = 'secretkey';
-// optional
-$options = [
-    'hideBadge' => false,
-    'dataBadge' => 'bottomright',
-    'timeout' => 5,
-    'debug' => false
-];
-$captcha = new \AlbertCht\InvisibleReCaptcha\InvisibleReCaptcha($siteKey, $secretKey, $options);
-
-// you can override single option config like this
-$captcha->setOption('debug', true);
-
-if (!empty($_POST)) {
-    var_dump($captcha->verifyResponse($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']));
-    exit();
-}
-
-?>
-
-<form action="?" method="POST">
-    <?php echo $captcha->render(); ?>
-    <button type="submit">Submit</button>
-</form>
-```
-
 ## Take Control of Submit Function
 Use this function only when you need to take all control after clicking submit button. Recaptcha validation will not be triggered if you return false in this function.
 
@@ -251,21 +172,7 @@ _submitEvent = function() {
     });
 };
 ```
-## Example Repository
-Repo: https://github.com/albertcht/invisible-recaptcha-example
-
-This repo demonstrates how to use this package with ajax way.
-
-## Showcases
-
-* [Laravel Boilerplate](https://github.com/Labs64/laravel-boilerplate)
-
 ## Credits 
 
 * anhskohbo (the author of no-captcha package)
-* [Contributors](https://github.com/albertcht/invisible-recaptcha/graphs/contributors)
-
-## Support on Beerpay
-Hey dude! Help me out for a couple of :beers:!
-
-[![Beerpay](https://beerpay.io/albertcht/invisible-recaptcha/badge.svg?style=beer-square)](https://beerpay.io/albertcht/invisible-recaptcha)  [![Beerpay](https://beerpay.io/albertcht/invisible-recaptcha/make-wish.svg?style=flat-square)](https://beerpay.io/albertcht/invisible-recaptcha?focus=wish)
+* [Contributors](https://github.com/spaanproductions/invisible-recaptcha/graphs/contributors)
