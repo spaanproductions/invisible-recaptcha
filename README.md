@@ -175,4 +175,5 @@ _submitEvent = function() {
 ## Credits 
 
 * anhskohbo (the author of no-captcha package)
+* albertcht (the original author of the laravel invisible-recaptcha package https://github.com/albertcht/invisible-recaptcha)
 * [Contributors](https://github.com/spaanproductions/invisible-recaptcha/graphs/contributors)
