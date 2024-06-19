@@ -36,7 +36,7 @@ INVISIBLE_RECAPTCHA_SITEKEY={siteKey}
 INVISIBLE_RECAPTCHA_SECRETKEY={secretKey}
 
 // optional
-INVISIBLE_RECAPTCHA_BADGEHIDE=false
+INVISIBLE_RECAPTCHA_BADGEHIDE=true
 INVISIBLE_RECAPTCHA_DATABADGE="bottomright"
 INVISIBLE_RECAPTCHA_TIMEOUT=5
 INVISIBLE_RECAPTCHA_DEBUG=false
@@ -44,7 +44,7 @@ INVISIBLE_RECAPTCHA_DEBUG=false
 
 > There are three different captcha styles you can set: `bottomright`, `bottomleft`, `inline`
 
-> If you set `INVISIBLE_RECAPTCHA_BADGEHIDE` to true, you can hide the badge logo.
+> If you set `INVISIBLE_RECAPTCHA_BADGEHIDE` to false, you can show the badge logo.
 
 > You can see the binding status of those catcha elements on browser console by setting `INVISIBLE_RECAPTCHA_DEBUG` as true.
 
