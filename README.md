@@ -1,4 +1,4 @@
-Invisible reCAPTCHA
+Laravel Invisible reCAPTCHA
 ==========
 ![php-badge](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)
 [![packagist-badge](https://img.shields.io/packagist/v/spaanproductions/invisible-recaptcha.svg)](https://packagist.org/packages/spaanproductions/invisible-recaptcha)
@@ -22,17 +22,11 @@ composer require spaanproductions/invisible-recaptcha
 
 ### Setup
 
-Add ServiceProvider to the providers array in `app/config/app.php`.
-
-```
-SpaanProductions\InvisibleReCaptcha\InvisibleReCaptchaServiceProvider::class,
-```
-
-> It also supports package discovery for Laravel 5.5.
+It has auto discover for the provider. No need to add it manually. 
 
 ### Configuration
 Before you set your config, remember to choose `invisible reCAPTCHA` while applying for keys.
-![invisible_recaptcha_setting](http://i.imgur.com/zIAlKbY.jpg)
+![invisible_recaptcha_setting](./images/zIAlKbY.jpg)
 
 Add `INVISIBLE_RECAPTCHA_SITEKEY`, `INVISIBLE_RECAPTCHA_SECRETKEY` to **.env** file.
 
@@ -43,7 +37,7 @@ INVISIBLE_RECAPTCHA_SECRETKEY={secretKey}
 
 // optional
 INVISIBLE_RECAPTCHA_BADGEHIDE=false
-INVISIBLE_RECAPTCHA_DATABADGE='bottomright'
+INVISIBLE_RECAPTCHA_DATABADGE="bottomright"
 INVISIBLE_RECAPTCHA_TIMEOUT=5
 INVISIBLE_RECAPTCHA_DEBUG=false
 ```
@@ -79,40 +73,6 @@ With custom language support:
 // or you can use this in blade
 @captcha('en')
 ```
-
-##### Usage with Javascript frameworks like VueJS:
-
-The `render()` process includes three distinct sections that can be rendered separately incase you're using the package with a framework like VueJS which throws console errors when `<script>` tags are included in templates.
-
-You can render the polyfill (do this somewhere like the head of your HTML:)
-
-```php
-{!! app('captcha')->renderPolyfill() !!}
-// Or with blade directive:
-@captchaPolyfill
-```
-
-You can render the HTML using this following, this needs to be INSIDE your `<form>` tag:
-
-```php
-{!! app('captcha')->renderCaptchaHTML() !!}
-// Or with blade directive:
-@captchaHTML
-```
-
-And you can render the neccessary `<script>` tags including the optional language support by using:
-
-```php
-// The argument is optional.
-{!! app('captcha')->renderFooterJS('en') !!}
-
-// Or with blade directive:
-@captchaScripts
-// blade directive, with language support:
-@captchaScripts('en')
-
-```
-
 ##### Validation
 
 Add `'g-recaptcha-response' => 'required|captcha'` to rules array.
@@ -121,57 +81,8 @@ Add `'g-recaptcha-response' => 'required|captcha'` to rules array.
 $validate = Validator::make(Input::all(), [
     'g-recaptcha-response' => 'required|captcha'
 ]);
-
 ```
 
-## Take Control of Submit Function
-Use this function only when you need to take all control after clicking submit button. Recaptcha validation will not be triggered if you return false in this function.
-
-```javascript
-_beforeSubmit = function(e) {
-    console.log('submit button clicked.');
-    // do other things before captcha validation
-    // e represents reference to original form submit event
-    // return true if you want to continue triggering captcha validation, otherwise return false
-    return false;
-}
-```
-
-## Customize Submit Function
-If you want to customize your submit function, for example: doing something after click the submit button or changing your submit to ajax call, etc.
-
-The only thing you need to do is to implement `_submitEvent` in javascript
-```javascript
-_submitEvent = function() {
-    console.log('submit button clicked.');
-    // write your logic here
-    // submit your form
-    _submitForm();
-}
-```
-Here's an example to use an ajax submit (using jquery selector)
-```javascript
-_submitEvent = function() {
-    $.ajax({
-        type: "POST",
-        url: "{{route('message.send')}}",
-         data: {
-            "name": $("#name").val(),
-            "email": $("#email").val(),
-            "content": $("#content").val(),
-            // important! don't forget to send `g-recaptcha-response`
-            "g-recaptcha-response": $("#g-recaptcha-response").val()
-        },
-        dataType: "json",
-        success: function(data) {
-            // success logic
-        },
-        error: function(data) {
-            // error logic
-        }
-    });
-};
-```
 ## Credits 
 
 * anhskohbo (the author of no-captcha package)
